@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tienda-online</title>
+    <script src="js/scripts.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>mi tienda</h1>
+        <div id="checkout-display">Pagar $0</div>
+        <a class="carrito" href="/carrito">Ir al Carrito</a>
+        <button id="checkout" class="button-checkout" onclick="pay()">pagar</button>
+        <a href="/usuarios" class="button-checkout">Ver Usuarios</a>
+    </header>
+    
+    
+    <main class="page-content">
+        <div class="product-container">
+            <h3>nombre</h3>
+            <img src="img/img1.jpeg" alt="Descripción del producto 1">
+            <h2>$40.000</h2>
+            <button class="button-add" onclick="add('img1', 40000)">agregar</button>
+        </div>
+        <div class="product-container">
+            <h3>nombre</h3>
+            <img src="img/img2.jpeg" alt="Descripción del producto 2">
+            <h2>$40.000</h2>
+            <button class="button-add" onclick="add('img2', 40000)">agregar</button>
+        </div>
+        <div class="product-container">
+            <h3>nombre</h3>
+            <img src="img/img3.jpeg" alt="Descripción del producto 3">
+            <h2>$40.000</h2>
+            <button class="button-add"onclick="add ('img3', 40000)">agregar</button>
+        </div>
+        <div class="product-container">
+            <h3>nombre</h3>
+            <img src="img/img4.jpeg" alt="Descripción del producto 4">
+            <h2>$40.000</h2>
+            <button class="button-add" onclick="add('img4', 40000)">agregar</button>
+        </div>
+        <div class="product-container">
+            <h3>nombre</h3>
+            <img src="img/img5.jpeg" alt="Descripción del producto 5">
+            <h2>$40.000</h2>
+            <button class="button-add" onclick="add('img5', 40000)">agregar</button>
+        </div>
+        <div class="product-container">
+            <h3>nombre</h3>
+            <img src="img/img6.jpeg" alt="Descripción del producto 6">
+            <h2>$40.000</h2>
+            <button class="button-add" onclick="add('img6', 40000)">agregar</button>
+        </div>
+        <div class="product-container">
+            <h3>nombre</h3>
+            <img src="img/img7.jpeg" alt="Descripción del producto 7">
+            <h2>$40.000</h2>
+            <button class="button-add" onclick="add('img7', 40000)">agregar</button>
+        </div>
+        <div class="product-container">
+            <h3>nombre</h3>
+            <img src="img/img8.jpeg" alt="Descripción del producto 8">
+            <h2>$65.000</h2>
+            <button class="button-add" onclick="add('img8', 65000)">agregar</button>
+        </div>
+    </main>
+</body>
+</html>

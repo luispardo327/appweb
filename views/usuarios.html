@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="css/usuarios.css">
+</head>
+<body>
+    <h1>Gestión de Usuarios</h1>
+    <button onclick="showAddUserForm()">Agregar Usuario</button>
+
+    <div id="addUserForm" style="display: none;">
+        <h2>Nuevo Usuario</h2>
+        <form id="userForm">
+            <input type="text" id="username" placeholder="Nombre de usuario" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit">Agregar</button>
+        </form>
+    </div>
+
+    <h2>Lista de Usuarios</h2>
+    <ul id="usuarios"></ul>
+
+    <script>
+        function showAddUserForm() {
+            document.getElementById('addUserForm').style.display = 'block';
+        }
+
+        window.onload = function() {
+            fetch('http://localhost:3000/api/usuarios')
+                .then(response => response.json())
+                .then(data => {
+                    const ul = document.getElementById('usuarios');
+                    data.forEach(usuario => {
+                        const li = document.createElement('li');
+                        li.textContent = `${usuario.username} `;
+                        li.setAttribute('data-id', usuario.id); // Añadir el ID para eliminar
+                        li.innerHTML += `<button onclick="deleteUser(${usuario.id})">Eliminar</button>`;
+                        ul.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        };
+
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch('http://localhost:3000/api/usuarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Agregar el nuevo usuario a la lista sin recargar
+                const ul = document.getElementById('usuarios');
+                const li = document.createElement('li');
+                li.textContent = `${data.username} `;
+                li.setAttribute('data-id', data.id); // Añadir el ID para eliminar
+                li.innerHTML += `<button onclick="deleteUser(${data.id})">Eliminar</button>`;
+                ul.appendChild(li);
+                // Limpiar el formulario
+                document.getElementById('userForm').reset();
+                document.getElementById('addUserForm').style.display = 'none';
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        function deleteUser(id) {
+            fetch(`http://localhost:3000/api/usuarios/${id}`, {
+                method: 'DELETE',
+            })
+            .then(() => {
+                // Remover el usuario de la lista
+                const ul = document.getElementById('usuarios');
+                const li = ul.querySelector(`li[data-id="${id}"]`);
+                if (li) {
+                    ul.removeChild(li);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

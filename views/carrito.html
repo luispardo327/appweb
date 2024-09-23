@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="css/carrito.css">
+</head>
+<body>
+    <header>
+        <h1 class="carrito">Carrito de Compras</h1>
+    </header>
+    
+    <div class="page-content">
+        <ul id="productos"></ul>
+    </div>
+
+    <div class="page-nav">
+        <h2>Total: <span id="total">0.00</span></h2>
+        <button class="button-checkout" onclick="finalizarCompra()">Finalizar Compra</button>
+    </div>
+
+    <script>
+        // Lógica para cargar productos y agregar al carrito
+        let carrito = [];
+
+        // Cargar productos al cargar la página
+        window.onload = function() {
+            fetch('http://localhost:3000/api/productos')
+                .then(response => response.json())
+                .then(data => {
+                    const ul = document.getElementById('productos');
+                    data.forEach(producto => {
+                        const li = document.createElement('li');
+                        li.className = 'product-container';
+                        li.innerHTML = `
+                            ${producto.nombre} - $${producto.precio}
+                            <button class="button-add" onclick="agregarAlCarrito(${producto.id}, '${producto.nombre}', ${producto.precio})">Agregar al carrito</button>
+                        `;
+                        ul.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        };
+
+        // Función para agregar un producto al carrito
+        function agregarAlCarrito(id, nombre, precio) {
+            carrito.push({ id, nombre, precio });
+            actualizarTotal();
+            alert(`${nombre} agregado al carrito.`);
+        }
+
+        // Función para actualizar el total
+        function actualizarTotal() {
+            const total = carrito.reduce((sum, producto) => sum + producto.precio, 0);
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        // Función para finalizar compra
+        function finalizarCompra() {
+            alert('Compra finalizada. Gracias por su compra!');
+            carrito = [];
+            actualizarTotal();
+        }
+    </script>
+</body>
+</html>
